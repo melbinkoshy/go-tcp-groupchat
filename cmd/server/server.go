@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand/v2"
 	"net"
+	"os"
 	"strconv"
 	"strings"
 	"sync"
@@ -114,7 +115,11 @@ func handleConnection(conn net.Conn) {
 }
 
 func main() {
-	listener, err := net.Listen("tcp", "localhost:42069")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "42069"
+	}
+	listener, err := net.Listen("tcp", "0.0.0.0:"+port)
 	if err != nil {
 		log.Fatal(err)
 	}
